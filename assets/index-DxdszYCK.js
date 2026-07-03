@@ -10,7 +10,7 @@ var e=(e,t,n)=>()=>{if(n)throw n[0];try{return e&&(t=e(e=0)),t}catch(e){throw n=
   `,e}})),i=t((e=>{Object.defineProperty(e,"__esModule",{value:!0}),e.Hero=t;function t(){let e=document.createElement(`section`);return e.className=`hero-section`,e.innerHTML=`
     <!-- La imagen de fondo va acá -->
     <div class="hero-image-bg">
-      <img src="../src/assets/mañas-hero.png" alt="Imagen de fondo">
+      <img src="/public/mañas-hero.png" alt="Imagen de fondo">
     </div>
     
     <!-- El overlay de color y el contenido flotando encima -->
