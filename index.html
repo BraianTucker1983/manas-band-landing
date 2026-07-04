@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mañas-band-landing</title>
+    
+    <!-- Agregamos el Favicon de forma relativa -->
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+
     <!-- Opcional: Un reset básico de estilos para quitar márgenes molestos -->
     <style>
         body {
@@ -18,9 +22,8 @@
     <!-- 1. El contenedor principal donde TypeScript "inyectará" las secciones -->
     <div id="app"></div>
 
-    <!-- 2. Vinculamos tu archivo index.ts principal -->
-    <!-- Nota: Si usas Vite, apuntas directamente al archivo .ts -->
-    <script type="module" src="/src/index.ts"></script>
+    <!-- 2. Vinculamos tu archivo index.ts principal con ruta relativa (./) -->
+    <script type="module" src="./src/index.ts"></script>
 
 </body>
 </html>

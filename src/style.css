@@ -20,52 +20,188 @@ body {
   color: var(--texto-blanco);
 }
 
-/* Contenedor principal del Hero */
+/* --- HERO SECTION CON ENTORNO 3D --- */
 .hero-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh; /* Ocupa el 70% de la pantalla */
+  min-height: 85vh; /* Le damos más altura para que luzca la foto y el carrusel */
   padding: 40px 20px;
-  /* Degradado radial que simula una luz violeta en el centro */
-  background: radial-gradient(circle at center, var(--bg-secundario) 0%, var(--bg-principal) 100%);
+  position: relative; 
+  overflow: hidden; 
+}
+
+/* Capa 1: La imagen de fondo */
+.hero-image-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./manas-hero.png');
+  background-size: cover;
+  background-position: center top; 
+  background-repeat: no-repeat;
+  filter: grayscale(100%) contrast(120%); 
+  z-index: 1; 
+}
+
+/* Capa 2: El overlay de color traslúcido */
+.hero-overlay-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg, 
+    rgba(11, 7, 19, 0.9) 0%, 
+    rgba(22, 15, 36, 0.75) 100%
+  );
+  z-index: 2; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
+/* Capa 3: El contenido */
 .hero-content {
   max-width: 800px;
+  width: 100%;
+  z-index: 3; 
+  transform-style: preserve-3d; /* Evita que el contenedor colapse los elementos hijos en un plano 2D */
 }
 
-/* Etiqueta chiquita arriba del título */
-.hero-tag {
-  font-size: 0.85rem;
-  font-weight: bold;
-  letter-spacing: 3px;
-  color: var(--violeta-neon);
-  border: 1px solid var(--violeta-neon);
-  padding: 6px 12px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(157, 78, 221, 0.2);
-}
-
-/* Título imponente con efecto Neón */
 .hero-title {
-  font-size: 4rem;
+  font-size: 5rem; 
   font-weight: 900;
   letter-spacing: 2px;
   margin: 25px 0 15px 0;
   color: var(--texto-blanco);
-  /* El secreto del brillo neón */
-  text-shadow: 0 0 10px rgba(157, 78, 221, 0.6),
-               0 0 30px rgba(157, 78, 221, 0.3);
+  text-shadow: 0 0 15px rgba(157, 78, 221, 0.8),
+               0 0 40px rgba(157, 78, 221, 0.5);
 }
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: var(--texto-mutado);
-  max-width: 600px;
+  color: var(--texto-blanco); 
+  max-width: 650px;
   margin: 0 auto 35px auto;
   line-height: 1.6;
+}
+
+/* --- GEOMETRÍA DE LA PUERTA GIRATORIA (3D) --- */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 600px;
+  height: 400px; /* Ajustado para dar aire al nuevo formato compacto */
+  position: relative;
+  perspective: 1200px; /* Habilita el punto de fuga espacial tridimensional */
+  perspective-origin: center 50%;
+}
+
+.carousel-track3d {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  transform-style: preserve-3d; /* Clave absoluta para mantener la profundidad de la ronda */
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: grab;
+}
+
+.carousel-track3d:active {
+  cursor: grabbing;
+}
+
+.carousel-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 12px; /* Reducido a la mitad para hacer la tarjeta más compacta */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Distribuye el contenido aprovechando el alto */
+  user-select: none;
+  
+  pointer-events: none;
+  opacity: 0.3; /* Cartas en segundo plano difuminadas */
+  transform-style: preserve-3d;
+  backface-visibility: visible; 
+  
+  /* Se rota la carta sobre su eje y luego se empuja 160px hacia los bordes del círculo */
+  transform: rotateY(var(--card-angle)) translateZ(160px);
+  transition: transform 0.7s ease, opacity 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Carta enfocada al frente */
+.carousel-card.active {
+  opacity: 1;
+  pointer-events: auto; 
+  border-color: rgba(157, 78, 221, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(157, 78, 221, 0.15);
+}
+
+/* Contenedor rectangular flexible para la foto */
+.card-photo-wrapper {
+  width: 100%;
+  height: 180px;           /* Altura límite rectangular */
+  border-radius: 8px;      /* Vértices sutilmente redondeados */
+  overflow: hidden;
+  margin-bottom: 10px;     /* Menos espacio abajo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2); /* Fondo oscuro de respaldo si la foto es angosta */
+}
+
+/* Ajuste total para que la foto se vea COMPLETA y sin cortes */
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;     /* Fuerza a la foto a escalarse completa dentro del rectángulo sin cortes */
+}
+
+.card-info {
+  text-align: center;
+  width: 100%;
+}
+
+.card-name {
+  font-size: 1.1rem;       /* Reducido ligeramente para no saturar el diseño compacto */
+  margin: 2px 0;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.card-role {
+  font-size: 0.85rem;
+  color: var(--texto-mutado);
+  margin: 0 0 8px 0;       /* Menos separación con el icono de Instagram */
+}
+
+.card-ig-link {
+  color: #ffffff;
+  transition: color 0.2s, transform 0.2s;
+  display: inline-block;
+}
+
+.card-ig-link:hover {
+  color: #e1306c;
+  transform: scale(1.15);
 }
 
 /* Botonera */
@@ -76,7 +212,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Botón Violeta Neón Brillante */
 .btn-primary {
   background: var(--violeta-neon);
   color: white;
@@ -92,12 +227,11 @@ body {
 }
 
 .btn-primary:hover {
-  background: #b05fe6; /* Un violeta un toque más claro */
-  transform: translateY(-2px); /* Efecto de flotado */
-  box-shadow: 0 6px 20px rgba(157, 78, 221, 0.7); /* Brilla más al pasar el mouse */
+  background: #b05fe6; 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 20px rgba(157, 78, 221, 0.7); 
 }
 
-/* Botón secundario transparente */
 .btn-secondary {
   background: transparent;
   color: var(--texto-blanco);
@@ -117,25 +251,16 @@ body {
   transform: translateY(-2px);
 }
 
-/* --- HEADER --- */
-/* --- HEADER CON EFECTO TRANSLÚCIDO POTENCIADO --- */
+/* --- HEADER TRANSLÚCIDO --- */
 .main-header {
-  /* Bajamos el fondo a 0.65 para que sea más transparente */
   background-color: rgba(11, 7, 19, 0.65); 
-  
-  /* Subimos el blur de 5px a 16px para que difumine zarpado lo que pasa atrás */
   backdrop-filter: blur(16px); 
-  -webkit-backdrop-filter: blur(16px); /* Soporte para Safari */
-  
-  /* Un borde finito con un toque de brillo lila para delimitar el vidrio */
+  -webkit-backdrop-filter: blur(16px); 
   border-bottom: 1px solid rgba(157, 78, 221, 0.15);
-  
   position: sticky;
   top: 0;
   z-index: 100;
   padding: 15px 20px;
-  
-  /* Sombra suave para darle volumen sobre el contenido */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -197,7 +322,6 @@ body {
   margin: 0 auto;
 }
 
-/* Tarjetas de fechas estilo club nocturno */
 .info-card {
   background-color: var(--bg-secundario);
   border: 1px solid rgba(157, 78, 221, 0.1);
@@ -258,7 +382,7 @@ body {
 
 /* --- FOOTER --- */
 .main-footer {
-  background-color: #06040a; /* Un toque más oscuro que el fondo principal */
+  background-color: #06040a; 
   border-top: 1px solid var(--bg-secundario);
   padding: 40px 20px;
   margin-top: 60px;
@@ -296,8 +420,17 @@ body {
   color: var(--violeta-neon);
 }
 
-/* Ajuste Mobile básico */
+/* Responsive Mobile */
 @media (max-width: 600px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+  .carousel-container {
+    perspective: 1000px;
+  }
+  .carousel-card {
+    transform: rotateY(var(--card-angle)) translateZ(130px); /* Ajuste de radio de giro sutil en móviles */
+  }
   .info-card {
     flex-direction: column;
     text-align: center;
@@ -313,75 +446,4 @@ body {
   .card-details {
     padding-left: 0;
   }
-}
-
-/* --- HERO SECTION CON FOTO INTEGRADA (NUEVO) --- */
-.hero-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 85vh; /* Le damos más altura para que luzca la foto */
-  padding: 40px 20px;
-  position: relative; /* Importante para las capas de fondo */
-  overflow: hidden; /* Cortamos cualquier cosa que se salga */
-}
-
-/* Capa 1: La imagen de fondo */
-.hero-image-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  
-  /* Linkeamos la foto que guardaste */
-  background-image: url('./foto-banda.jpg');
-  
-  /* Configuración clave para que la foto se vea bien */
-  background-size: cover;    /* La imagen cubre todo el contenedor */
-  background-position: center top; /* Centrada, y priorizando las cabezas */
-  background-repeat: no-repeat;
-  filter: grayscale(100%) contrast(120%); /* Opcional: la hacemos blanco y negro y con más contraste para un look más metalero */
-  z-index: 1; /* Al fondo */
-}
-
-/* Capa 2: El overlay de color (El secreto para que se vea pro) */
-.hero-overlay-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  
-  /* Degradado que va de negro a un violeta oscuro, pero traslúcido */
-  background: linear-gradient(
-    135deg, 
-    rgba(11, 7, 19, 0.9) 0%, 
-    rgba(22, 15, 36, 0.75) 100%
-  );
-  
-  z-index: 2; /* Sobre la foto */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-/* Capa 3: El contenido (Texto y botones) */
-.hero-content {
-  max-width: 800px;
-  z-index: 3; /* Sobre el overlay */
-}
-
-/* Ajustes adicionales al texto para que destaquen más sobre la foto */
-.hero-title {
-  font-size: 5rem; /* Un toque más grande ahora que tiene fondo */
-  /* Brillo neón más intenso */
-  text-shadow: 0 0 15px rgba(157, 78, 221, 0.8),
-               0 0 40px rgba(157, 78, 221, 0.5);
-}
-
-.hero-subtitle {
-  color: var(--texto-blanco); /* Blanco total para mayor contraste */
-  max-width: 650px;
 }
