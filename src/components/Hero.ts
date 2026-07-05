@@ -54,8 +54,11 @@ export function Hero(): HTMLElement {
     <div class="hero-overlay-container">
       <div class="hero-content">
         
-        <h1 class="hero-title">MAÑAS</h1>
-        <p class="hero-subtitle">El pulso de la vieja escuela. Sonido crudo para tiempos efímeros.</p>
+        <!-- Agrupamos los textos arriba -->
+        <div class="hero-text-header">
+          <h1 class="hero-title">MAÑAS</h1>
+          <p class="hero-subtitle">El pulso de la vieja escuela. Sonido crudo para tiempos efímeros.</p>
+        </div>
         
         <!-- Contenedor del Carrusel Cilíndrico 3D (Puerta Giratoria) -->
         <div class="carousel-container">
@@ -64,7 +67,7 @@ export function Hero(): HTMLElement {
           </div>
         </div>
 
-        <!-- Botonera -->
+        <!-- Botonera independiente -->
         <div class="hero-buttons">
           <button class="btn-primary">ESCUCHAR AHORA</button>
           <button class="btn-secondary">PRÓXIMAS FECHAS</button>
