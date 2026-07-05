@@ -1,7 +1,6 @@
 // src/component/Hero.ts
 
 // 1. Importamos las imágenes usando la ruta relativa de Vite desde tu carpeta de assets
-// (Si tus imágenes están directo en la carpeta 'public', cambiá las rutas a: import fotoJose from '/manas-jose.png', etc.)
 import fotoJose from '/src/assets/manas-jose.png';
 import fotoCalolo from '/src/assets/manas-calolo.png';
 import fotoBraian from '/src/assets/manas-braian.png';
@@ -132,6 +131,7 @@ export function Hero(): HTMLElement {
 
     // --- ENLACE DE EVENTOS MOUSE ---
     track.addEventListener('mousedown', (e) => {
+      // Si el clic es en el link de IG, no iniciar el drag de la calesita
       if ((e.target as HTMLElement).closest('.card-ig-link')) return; 
       e.preventDefault();
       dragStart(e.clientX);
@@ -141,11 +141,30 @@ export function Hero(): HTMLElement {
 
     // --- ENLACE DE EVENTOS PANTALLAS TÁCTILES ---
     track.addEventListener('touchstart', (e) => {
-      if ((e.target as HTMLElement).closest('.card-ig-link')) return;
+      // CORRECCIÓN: Si el toque es en el link de IG, permitimos el comportamiento nativo y salimos
+      if ((e.target as HTMLElement).closest('.card-ig-link')) {
+        isDragging = false;
+        return; 
+      }
       dragStart(e.touches[0].clientX);
+    }, { passive: true }); // Mejora el rendimiento del scroll táctil
+
+    track.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      
+      // CORRECCIÓN: Si el dedo está encima del link de Instagram, no arrastramos el carrusel
+      if ((e.target as HTMLElement).closest('.card-ig-link')) return;
+      
+      dragMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+      // CORRECCIÓN: Si el toque finaliza en el link de IG y no se estaba arrastrando, dejamos que actúe el clic nativo
+      if ((e.target as HTMLElement).closest('.card-ig-link') && !isDragging) {
+        return;
+      }
+      dragEnd();
     });
-    track.addEventListener('touchmove', (e) => dragMove(e.touches[0].clientX));
-    track.addEventListener('touchend', dragEnd);
 
     // Renderizado base inicial
     rotateCarousel(0);

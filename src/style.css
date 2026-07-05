@@ -153,6 +153,7 @@ body {
   pointer-events: auto; 
   border-color: rgba(157, 78, 221, 0.4);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(157, 78, 221, 0.15);
+  z-index: 10; /* Asegura prioridad de capa en computadoras */
 }
 
 /* Contenedor rectangular flexible para la foto */
@@ -429,8 +430,17 @@ body {
     perspective: 1000px;
   }
   .carousel-card {
-    transform: rotateY(var(--card-angle)) translateZ(130px); /* Ajuste de radio de giro sutil en móviles */
+    transform: rotateY(var(--card-angle)) translateZ(130px);
+    /* SOLUCIÓN: Esconde las espaldas de las tarjetas para liberar clics */
+    backface-visibility: hidden; 
   }
+  
+  /* SOLUCIÓN: Empuja la tarjeta activa un poco más al frente y le da prioridad absoluta */
+  .carousel-card.active {
+    transform: rotateY(var(--card-angle)) translateZ(150px) scale(1.05);
+    z-index: 99;
+  }
+  
   .info-card {
     flex-direction: column;
     text-align: center;
