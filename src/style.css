@@ -1,3 +1,6 @@
+/* ==========================================================================
+   VARIABLES DE ENTORNO Y CONFIGURACIÓN GLOBAL
+   ========================================================================== */
 :root {
   /* Fondos oscuros profundos */
   --bg-principal: #0b0713;   /* Un negro con un levísimo tinte violeta */
@@ -20,7 +23,57 @@ body {
   color: var(--texto-blanco);
 }
 
-/* --- HERO SECTION CON ENTORNO 3D --- */
+/* ==========================================================================
+   HEADER TRANSLÚCIDO
+   ========================================================================== */
+.main-header {
+  background-color: rgba(11, 7, 19, 0.65); 
+  backdrop-filter: blur(16px); 
+  -webkit-backdrop-filter: blur(16px); 
+  border-bottom: 1px solid rgba(157, 78, 221, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 15px 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 900;
+  color: var(--texto-blanco);
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(157, 78, 221, 0.4);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: var(--texto-mutado);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: var(--violeta-neon);
+  text-shadow: 0 0 5px var(--violeta-neon);
+}
+
+/* ==========================================================================
+   HERO SECTION CON ENTORNO 3D (ESCRITORIO BASE)
+   ========================================================================== */
 .hero-section {
   display: flex;
   justify-content: center;
@@ -91,7 +144,7 @@ body {
   line-height: 1.6;
 }
 
-/* --- GEOMETRÍA DE LA PUERTA GIRATORIA (3D) --- */
+/* --- GEOMETRÍA DE LA PUERTA GIRATORIA (3D ESCRITORIO) --- */
 .carousel-container {
   display: flex;
   align-items: center;
@@ -252,53 +305,9 @@ body {
   transform: translateY(-2px);
 }
 
-/* --- HEADER TRANSLÚCIDO --- */
-.main-header {
-  background-color: rgba(11, 7, 19, 0.65); 
-  backdrop-filter: blur(16px); 
-  -webkit-backdrop-filter: blur(16px); 
-  border-bottom: 1px solid rgba(157, 78, 221, 0.15);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 15px 20px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-}
-
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: 900;
-  color: var(--texto-blanco);
-  letter-spacing: 2px;
-  text-shadow: 0 0 8px rgba(157, 78, 221, 0.4);
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-item {
-  color: var(--texto-mutado);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: color 0.3s ease;
-}
-
-.nav-item:hover {
-  color: var(--violeta-neon);
-  text-shadow: 0 0 5px var(--violeta-neon);
-}
-
-/* --- SECCIÓN INFO (SHOWS) --- */
+/* ==========================================================================
+   SECCIÓN INFO (SHOWS)
+   ========================================================================== */
 .info-section {
   padding: 80px 20px;
   background-color: var(--bg-principal);
@@ -381,7 +390,9 @@ body {
   box-shadow: 0 0 10px var(--violeta-neon);
 }
 
-/* --- FOOTER --- */
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
 .main-footer {
   background-color: #06040a; 
   border-top: 1px solid var(--bg-secundario);
@@ -421,31 +432,76 @@ body {
   color: var(--violeta-neon);
 }
 
-/* Responsive Mobile */
+/* ==========================================================================
+   RESPONSIVE: MOBILE VERTICAL (PORTRAIT)
+   ========================================================================== */
 @media (max-width: 600px) {
+  .hero-section {
+    padding: 20px 10px;
+    min-height: auto; 
+  }
+
   .hero-title {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
+    margin: 15px 0 10px 0;
   }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  /* Redimensionamiento óptimo del carrusel para evitar fallas de renderizado del blur */
   .carousel-container {
+    height: 340px; 
     perspective: 1000px;
+    margin: 20px auto;
   }
+
+  .carousel-track3d {
+    width: 180px;  
+    height: 280px; 
+  }
+
+  .card-photo-wrapper {
+    height: 140px; 
+  }
+
   .carousel-card {
-    transform: rotateY(var(--card-angle)) translateZ(130px);
-    /* SOLUCIÓN: Esconde las espaldas de las tarjetas para liberar clics */
+    /* Al acercar las cartas al eje Z (110px), los navegadores móbiles 
+       vuelven a activar el backdrop-filter correctamente */
+    transform: rotateY(var(--card-angle)) translateZ(110px);
     backface-visibility: hidden; 
+    background: rgba(255, 255, 255, 0.08); 
   }
   
-  /* SOLUCIÓN: Empuja la tarjeta activa un poco más al frente y le da prioridad absoluta */
   .carousel-card.active {
-    transform: rotateY(var(--card-angle)) translateZ(150px) scale(1.05);
+    transform: rotateY(var(--card-angle)) translateZ(135px) scale(1.05);
     z-index: 99;
+    opacity: 1;
+  }
+
+  /* Botones apilados en mobile */
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    gap: 10px;
   }
   
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  /* Tarjetas de shows adaptables */
   .info-card {
     flex-direction: column;
     text-align: center;
     gap: 15px;
   }
+
   .card-date {
     border-right: none;
     border-bottom: 2px solid rgba(154, 140, 191, 0.2);
@@ -453,7 +509,71 @@ body {
     padding-bottom: 10px;
     width: 100%;
   }
+
   .card-details {
     padding-left: 0;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE: MOBILE HORIZONTAL (LANDSCAPE)
+   ========================================================================== */
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero-section {
+    min-height: auto;
+    padding: 30px 20px;
+  }
+
+  /* Divide el contenido en 2 columnas para que nada se corte verticalmente */
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    max-width: 950px;
+  }
+
+  .hero-overlay-container {
+    align-items: center; 
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .hero-subtitle {
+    margin: 0 0 15px 0;
+    text-align: left;
+  }
+
+  .hero-buttons {
+    justify-content: flex-start;
+  }
+
+  /* Reducción del entorno 3D para pantallas de baja altura */
+  .carousel-container {
+    margin: 0 auto;
+    height: 300px; 
+  }
+
+  .carousel-track3d {
+    width: 150px;
+    height: 240px;
+  }
+
+  .card-photo-wrapper {
+    height: 110px;
+  }
+
+  .carousel-card {
+    transform: rotateY(var(--card-angle)) translateZ(100px); 
+    backface-visibility: hidden;
+  }
+
+  .carousel-card.active {
+    transform: rotateY(var(--card-angle)) translateZ(120px) scale(1.02);
   }
 }

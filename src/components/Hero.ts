@@ -85,17 +85,20 @@ export function Hero(): HTMLElement {
       currentRotationAngle = targetAngle;
       track.style.transform = `rotateY(${currentRotationAngle}deg)`;
       
-      // Normalizamos el ángulo para mapear correctamente las 3 posiciones fijas
+      // Convertimos el ángulo actual a un sistema de 0 a 359 grados
       const normalizedAngle = ((currentRotationAngle % 360) + 360) % 360;
       
+      // Buscamos qué tarjeta está al frente (0°, 120° o 240°)
+      // Cuando el track está en X grados, la tarjeta que queda al frente es la que contrarresta esa rotación
       let activeIndex = 0;
       if (normalizedAngle === 0) activeIndex = 0;
-      if (normalizedAngle === 120) activeIndex = 2;
-      if (normalizedAngle === 240) activeIndex = 1;
+      if (normalizedAngle === 120) activeIndex = 2; // Al rotar +120, la tarjeta 2 pasa al frente
+      if (normalizedAngle === 240) activeIndex = 1; // Al rotar +240, la tarjeta 1 pasa al frente
 
       // Habilitamos pointer-events y opacidad completa solo a la carta que mira al frente
-      cards.forEach((card, idx) => {
-        if (idx === activeIndex) {
+      cards.forEach((card) => {
+        const cardIndex = parseInt(card.getAttribute('data-index') || '0', 10);
+        if (cardIndex === activeIndex) {
           card.classList.add('active');
         } else {
           card.classList.remove('active');
@@ -106,7 +109,7 @@ export function Hero(): HTMLElement {
     // Variables de control para el arrastre / swipe táctil
     let startX = 0;
     let isDragging = false;
-    const minSwipeDistance = 50; 
+    const minSwipeDistance = 40; 
 
     const dragStart = (clientX: number) => {
       startX = clientX;
@@ -119,11 +122,13 @@ export function Hero(): HTMLElement {
 
       if (Math.abs(diffX) > minSwipeDistance) {
         if (diffX > 0) {
-          rotateCarousel(currentRotationAngle - 120); // Gira a la izquierda
+          // Swipe a la izquierda -> rotación antihoraria
+          rotateCarousel(currentRotationAngle - 120); 
         } else {
-          rotateCarousel(currentRotationAngle + 120); // Gira a la derecha
+          // Swipe a la derecha -> rotación horaria
+          rotateCarousel(currentRotationAngle + 120); 
         }
-        isDragging = false; // Cortamos el flujo para un desplazamiento unitario por swipe
+        isDragging = false; 
       }
     };
 
@@ -131,7 +136,6 @@ export function Hero(): HTMLElement {
 
     // --- ENLACE DE EVENTOS MOUSE ---
     track.addEventListener('mousedown', (e) => {
-      // Si el clic es en el link de IG, no iniciar el drag de la calesita
       if ((e.target as HTMLElement).closest('.card-ig-link')) return; 
       e.preventDefault();
       dragStart(e.clientX);
@@ -141,25 +145,20 @@ export function Hero(): HTMLElement {
 
     // --- ENLACE DE EVENTOS PANTALLAS TÁCTILES ---
     track.addEventListener('touchstart', (e) => {
-      // CORRECCIÓN: Si el toque es en el link de IG, permitimos el comportamiento nativo y salimos
       if ((e.target as HTMLElement).closest('.card-ig-link')) {
         isDragging = false;
         return; 
       }
       dragStart(e.touches[0].clientX);
-    }, { passive: true }); // Mejora el rendimiento del scroll táctil
+    }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
-      
-      // CORRECCIÓN: Si el dedo está encima del link de Instagram, no arrastramos el carrusel
       if ((e.target as HTMLElement).closest('.card-ig-link')) return;
-      
       dragMove(e.touches[0].clientX);
     }, { passive: true });
 
     track.addEventListener('touchend', (e) => {
-      // CORRECCIÓN: Si el toque finaliza en el link de IG y no se estaba arrastrando, dejamos que actúe el clic nativo
       if ((e.target as HTMLElement).closest('.card-ig-link') && !isDragging) {
         return;
       }
