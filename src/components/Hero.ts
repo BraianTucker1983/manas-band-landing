@@ -56,7 +56,7 @@ export function Hero(): HTMLElement {
       <div class="hero-content">
         
         <h1 class="hero-title">MAÑAS</h1>
-        <p class="hero-subtitle">El nuevo álbum ya está disponible. Subí el volumen.</p>
+        <p class="hero-subtitle">El pulso de la vieja escuela. Sonido crudo para tiempos efímeros.</p>
         
         <!-- Contenedor del Carrusel Cilíndrico 3D (Puerta Giratoria) -->
         <div class="carousel-container">

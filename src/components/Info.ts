@@ -7,10 +7,10 @@ export function Info(): HTMLElement {
     <h2 class="section-title">PRÓXIMOS SHOWS</h2>
     <div class="info-grid">
       <div class="info-card">
-        <div class="card-date">15 AGO</div>
+        <div class="card-date">25 JUL</div>
         <div class="card-details">
-          <h3>Festival de Rock</h3>
-          <p>Localidad Club • 21:00 hs</p>
+          <h3>Tomacco</h3>
+          <p>Pueblo San Jose • 23:50 hs</p>
         </div>
         <button class="btn-card">Entradas</button>
       </div>

@@ -7,8 +7,7 @@ export function Header(): HTMLElement {
       <div class="logo">[ LOGO ]</div>
       <nav class="nav-links">
         <a href="#musica" class="nav-item">Música</a>
-        <a href="#fechas" class="nav-item">Fechas</a>
-        <a href="#contacto" class="nav-item">Contacto</a>
+        <a href="#fechas" class="nav-item">Fechas</a>        
       </nav>
     </div>
   `;
