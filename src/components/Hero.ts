@@ -18,7 +18,7 @@ export function Hero(): HTMLElement {
 
   // Datos reales de los miembros con sus imágenes procesadas por Vite
   const integrantes: Integrante[] = [
-    { nombre: 'Josefina Tomas', instrumento: 'Voz / Bajo', instagram: 'https://www.instagram.com/jos3.thomas/', foto: fotoJose },
+    { nombre: 'Josefina Thomas', instrumento: 'Voz / Bajo', instagram: 'https://www.instagram.com/jos3.thomas/', foto: fotoJose },
     { nombre: 'Sebastian Garippe', instrumento: 'Guitarra', instagram: 'https://www.instagram.com/sebastian_garippe/', foto: fotoCalolo },
     { nombre: 'Braian Tucker', instrumento: 'Batería', instagram: 'https://www.instagram.com/braiantucker/', foto: fotoBraian }
   ];
