@@ -81,7 +81,7 @@ body {
   min-height: 85vh; /* Le damos más altura para que luzca la foto y el carrusel */
   padding: 40px 20px;
   position: relative; 
-  overflow: hidden; 
+  overflow: hidden; /* Mantenido solo en escritorio */
 }
 
 /* Capa 1: La imagen de fondo */
@@ -433,50 +433,78 @@ body {
 }
 
 /* ==========================================================================
-   RESPONSIVE: MOBILE VERTICAL (PORTRAIT)
+   RESPONSIVE: MOBILE VERTICAL (PORTRAIT) - ¡CORREGIDO AQUÍ!
    ========================================================================== */
 @media (max-width: 600px) {
   .hero-section {
-    padding: 20px 10px;
-    min-height: auto; 
+    padding: 60px 10px; /* Más aire vertical */
+    min-height: 100svh !important; /* Forzamos altura elástica dinámica del viewport */
+    height: auto !important;
+    overflow: visible !important; /* Rompe el hachazo de las tarjetas */
+  }
+
+  /* El overlay no debe asfixiar el contenido interno */
+  .hero-overlay-container {
+    position: relative;
+    min-height: 100svh;
+    height: auto !important;
+    background: transparent; /* El degradado lo pasamos al fondo general */
+    display: flex;
+    align-items: center;
+  }
+
+  /* Inyectamos el gradiente de fondo directo para que crezca si el contenido crece */
+  .hero-section::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(11, 7, 19, 0.95) 0%, rgba(22, 15, 36, 0.85) 100%);
+    z-index: 2;
+  }
+
+  .hero-content {
+    height: auto !important;
+    overflow: visible !important;
+    padding: 20px 0;
   }
 
   .hero-title {
     font-size: 2.8rem;
-    margin: 15px 0 10px 0;
+    margin: 0 0 10px 0;
   }
 
   .hero-subtitle {
     font-size: 1rem;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
 
-  /* Redimensionamiento óptimo del carrusel para evitar fallas de renderizado del blur */
+  /* Redimensionamiento dinámico del carrusel */
   .carousel-container {
-    height: 340px; 
+    height: 320px; 
     perspective: 1000px;
-    margin: 20px auto;
+    margin: 30px auto;
+    overflow: visible !important;
   }
 
   .carousel-track3d {
-    width: 180px;  
-    height: 280px; 
+    width: 170px;  
+    height: 260px; 
+    overflow: visible !important;
   }
 
   .card-photo-wrapper {
-    height: 140px; 
+    height: 130px; 
   }
 
   .carousel-card {
-    /* Al acercar las cartas al eje Z (110px), los navegadores móbiles 
-       vuelven a activar el backdrop-filter correctamente */
     transform: rotateY(var(--card-angle)) translateZ(110px);
     backface-visibility: hidden; 
     background: rgba(255, 255, 255, 0.08); 
+    overflow: visible !important;
   }
   
   .carousel-card.active {
-    transform: rotateY(var(--card-angle)) translateZ(135px) scale(1.05);
+    transform: rotateY(var(--card-angle)) translateZ(130px) scale(1.05);
     z-index: 99;
     opacity: 1;
   }
@@ -486,13 +514,13 @@ body {
     flex-direction: column;
     width: 100%;
     max-width: 280px;
-    margin: 0 auto;
-    gap: 10px;
+    margin: 30px auto 0 auto; /* Separamos los botones del carrusel 3D */
+    gap: 12px;
   }
   
   .btn-primary, .btn-secondary {
     width: 100%;
-    padding: 12px 20px;
+    padding: 14px 20px;
   }
 
   /* Tarjetas de shows adaptables */
@@ -522,9 +550,9 @@ body {
   .hero-section {
     min-height: auto;
     padding: 30px 20px;
+    overflow: visible !important;
   }
 
-  /* Divide el contenido en 2 columnas para que nada se corte verticalmente */
   .hero-content {
     display: grid;
     grid-template-columns: 1fr 1fr; 
@@ -532,10 +560,12 @@ body {
     gap: 20px;
     text-align: left;
     max-width: 950px;
+    overflow: visible !important;
   }
 
   .hero-overlay-container {
     align-items: center; 
+    height: auto !important;
   }
 
   .hero-title {
@@ -557,6 +587,7 @@ body {
   .carousel-container {
     margin: 0 auto;
     height: 300px; 
+    overflow: visible !important;
   }
 
   .carousel-track3d {
