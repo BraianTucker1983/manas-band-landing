@@ -21,7 +21,7 @@ export function Hero(): HTMLElement {
   const integrantes: Integrante[] = [
     { nombre: 'Josefina Tomas', instrumento: 'Voz / Bajo', instagram: 'https://www.instagram.com/jos3.thomas/', foto: fotoJose },
     { nombre: 'Sebastian Garippe', instrumento: 'Guitarra', instagram: 'https://www.instagram.com/sebastian_garippe/', foto: fotoCalolo },
-    { nombre: 'Braian Tucker', instrumento: 'Batería', instagram: 'https://www.instagram.com/usuario3/', foto: fotoBraian }
+    { nombre: 'Braian Tucker', instrumento: 'Batería', instagram: 'https://www.instagram.com/braiantucker/', foto: fotoBraian }
   ];
 
   // Renderizamos las tarjetas inyectando el ángulo exacto para el cilindro (0°, 120°, 240°)
