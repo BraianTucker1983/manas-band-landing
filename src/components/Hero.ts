@@ -1,9 +1,9 @@
 // src/component/Hero.ts
 
 // 1. Importamos las imágenes usando la ruta relativa de Vite desde tu carpeta de assets
-import fotoJose from '/src/assets/manas-jose.png';
-import fotoCalolo from '/src/assets/manas-calolo.png';
-import fotoBraian from '/src/assets/manas-braian.png';
+import fotoJose from '/src/assets/manas-jose.webp';
+import fotoCalolo from '/src/assets/manas-calolo.webp';
+import fotoBraian from '/src/assets/manas-braian.webp';
 
 interface Integrante {
   nombre: string;

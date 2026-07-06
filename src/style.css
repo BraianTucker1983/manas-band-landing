@@ -91,11 +91,10 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/manas-hero.png');
+  background-image: url('/manas-hero.webp');
   background-size: cover;
   background-position: center top; 
-  background-repeat: no-repeat;
-  filter: grayscale(100%) contrast(120%); 
+  background-repeat: no-repeat;  
   z-index: 1; 
 }
 
