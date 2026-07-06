@@ -148,21 +148,27 @@ export function Hero(): HTMLElement {
 
     // --- ENLACE DE EVENTOS PANTALLAS TÁCTILES ---
     track.addEventListener('touchstart', (e) => {
-      if ((e.target as HTMLElement).closest('.card-ig-link')) {
+      const igLink = (e.target as HTMLElement).closest('.card-ig-link');
+      if (igLink) {
         isDragging = false;
         return; 
       }
       dragStart(e.touches[0].clientX);
-    }, { passive: true });
+    }); // Quitamos el { passive: true } para evitar conflictos con el arrastre
 
     track.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
       if ((e.target as HTMLElement).closest('.card-ig-link')) return;
       dragMove(e.touches[0].clientX);
-    }, { passive: true });
+    });
 
     track.addEventListener('touchend', (e) => {
-      if ((e.target as HTMLElement).closest('.card-ig-link') && !isDragging) {
+      const igLink = (e.target as HTMLElement).closest('.card-ig-link') as HTMLAnchorElement;
+      
+      // Si detectamos que tocó el link y no estaba arrastrando el carrusel...
+      if (igLink && !isDragging) {
+        // ...forzamos la apertura del Instagram de manera nativa
+        window.open(igLink.href, '_blank', 'noopener,noreferrer');
         return;
       }
       dragEnd();
