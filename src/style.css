@@ -91,7 +91,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./manas-hero.png');
+  background-image: url('/manas-hero.png');
   background-size: cover;
   background-position: center top; 
   background-repeat: no-repeat;
